@@ -1,7 +1,10 @@
 package co.micol.prj;
 
+import java.io.File;
+import java.io.FileReader;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 import co.micol.prj.vo.Bicle;
 import co.micol.prj.vo.Car;
@@ -16,11 +19,12 @@ import co.micol.prj.vo.DevVO;
 public class MainApp {
 //	private static DevVO vo; // VO 객체 인스턴스 정의
 //	private static MapTest mapTest;
-	
-	private static Map<String, Command> map = new HashMap<String, Command>(); //map에 인터페이스 넣기(예제: line96부터)
-	
+
+//	private static Map<String, Command> map = new HashMap<String, Command>(); //map에 인터페이스 넣기(예제: line96부터)
+	private static Properties properties = new Properties(); // 사용할 Properties객체 정의
+
 	public static void main(String[] args) {
-		 //List 인터페이스 객체(자기자신 인스턴스 생성 못함), 하위객체인 ArrayList으로 만들어준다
+		// List 인터페이스 객체(자기자신 인스턴스 생성 못함), 하위객체인 ArrayList으로 만들어준다
 //		List<DevVO> list = new ArrayList<DevVO>();
 //		vo = new DevVO(); // 객체 초기화
 //		vo.setId(1);
@@ -55,7 +59,7 @@ public class MainApp {
 //		for(DevVO vo : list) { //list 전체 가져오기
 //			vo.toString();
 //		}
-		
+
 //		mapTest = new MapTest();
 //		mapTest.setMap("micol", "1234");
 //		mapTest.setMap("park", "2345");
@@ -72,7 +76,7 @@ public class MainApp {
 //		int age = map.get("age");
 //		System.out.println(age);
 //		System.out.println(map.get("id"));
-		
+
 //		Map<String, DevVO> mapVo = new HashMap<String, DevVO>();
 //		DevVO vo = new DevVO();
 //		vo.setId(1);
@@ -93,12 +97,28 @@ public class MainApp {
 //		DevVO vo1 = new DevVO();
 //		vo1 = mapVo.get("박수동");
 //		vo1.toString();
-		
-		map.put("car", new Car());
-		map.put("Bicle", new Bicle());
-		
-		Command command = map.get("car");
-		command.run();
+
+//		map.put("car", new Car());
+//		map.put("Bicle", new Bicle());
+//		
+//		Command command = map.get("car");
+//		command.run();
+
+		File path = new File("src/main/resources/info.properties"); // 파일경로 설정
+		FileReader file; // 파일 내용을 읽어 들이는 객체
+		try {
+			file = new FileReader(path); // 프로퍼티 파일을 읽어 들임
+			properties.load(file); // Properties 객체에 저장 map.put()와 비슷함
+
+			// Properties k:v | k:v | k:v | 이런식으로 저장
+			// k값을 property라고 함
+			System.out.println(properties.getProperty("name"));
+			System.out.println(properties.getProperty("tel"));
+			System.out.println(properties.getProperty("address"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 	}
 
 }
